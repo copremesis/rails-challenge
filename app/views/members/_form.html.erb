@@ -1,0 +1,9 @@
+<%= form_with(model: Member.new, local: true) do |f| %>
+  Name: <%= f.text_field :name %><br />
+  Url : <%= f.text_field :original_url %><br />
+	Friends: <%= f.select(:friends, Member.all.map {|p| [ p.name, p.id ] }, 
+                                           { :prompt => "Please select"}, 
+                                           { :multiple => true, :size => 5 }) %> <br />
+
+  <%= f.submit %>
+<% end %>

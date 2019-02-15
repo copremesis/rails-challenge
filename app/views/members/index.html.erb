@@ -1,0 +1,25 @@
+<h1> Listing Members </h1>
+<table>
+  <thead>
+    <th> Name </th>
+    <th> Website </th>
+    <th> Friends </th>
+  </thead>
+  <tbody>
+  <% @members.each do |member| %>
+    <tr>
+      <td>
+        <%= link_to member.name, member_path(member) %>
+      </td>
+      <td>
+        <%= link_to member.short_url, member.short_url%>
+      </td>
+      <td>
+        <%= member.friends.count %>
+      </td>
+    </tr>
+  <%end %>
+  </tbody>
+</table>
+
+<%= render partial: 'form' %>

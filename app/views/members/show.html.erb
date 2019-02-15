@@ -1,0 +1,46 @@
+ 
+<%= link_to 'Back', root_path %>
+
+<dl>  
+  <dt> Name: </dt>       
+  <dd> <%= @member.name %> </dd>
+  <dt> ShortUrl: </dt>
+  <dd>
+    <%= link_to @member.short_url,  @member.short_url %>
+  </dd>
+  <dt>
+     Website:    
+  </dt>
+  <dd>
+    <%= link_to @member.original_url, @member.original_url %>
+  </dd>
+  <dt>
+    Friends:    
+  </dt>
+  <dd>
+    <%= @member.friends.count %>
+  </dt>
+  <dt>
+ Headings:
+  </dt>
+  <dd>
+    <ul>
+      <% @member.tags.each do |tag| %>
+        <li> <%= tag.text %> </li>
+      <% end %>
+    </ul>
+  </dd>
+  <dt>
+ Friend's Urls:
+  </dt>
+  <dd>
+    <ul>
+      <% @member.friends.each do |friend| %>
+        <li> <%= link_to friend.short_url, friend.short_url%> 
+        </li>
+      <% end %>
+    </ul>
+  </dd>
+</dl>
+
+
