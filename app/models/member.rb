@@ -48,7 +48,7 @@ class Member < ApplicationRecord
   def bread_crumbs_from(word)
     found_paths = []
     friends.each do |middleman|
-      (middleman.friends_with_common(word) - [self]).each do |friend|
+      (middleman.friends_with_common(word) - [self] - friends).each do |friend|
         bc_payload = {
           liason_chain: [self, middleman, friend],
           heading_matches: friend.keyword_search(word)
