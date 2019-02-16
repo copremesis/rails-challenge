@@ -1,9 +1,28 @@
  
 <%= link_to 'Back', root_path %>
 
+<style>
+	body {
+		margin-left: 5%;
+	}
+	ul.tags, ul.friend_links {
+			-moz-column-count: 3;
+			-moz-column-gap: 20px;
+			-webkit-column-count: 3;
+			-webkit-column-gap: 20px;
+			column-count: 3;
+			column-gap: 20px;
+	}
+</style>
+
+<div id="search" style="float: right; width:50%; height: 50%; margin-top: 7%">
+	<input id="query" placeholder="search" value="" />
+	<div id="results"> </div>
+</div>
+
 <dl>  
   <dt> Name: </dt>       
-  <dd> <%= @member.name %> </dd>
+  <dd> <h1><%= @member.name %> </h1></dd>
   <dt> ShortUrl: </dt>
   <dd>
     <%= link_to @member.short_url,  @member.short_url %>
@@ -24,7 +43,7 @@
  Headings:
   </dt>
   <dd>
-    <ul>
+    <ul class="tags">
       <% @member.tags.each do |tag| %>
         <li> <%= tag.text %> </li>
       <% end %>
@@ -34,7 +53,7 @@
  Friend's Urls:
   </dt>
   <dd>
-    <ul>
+    <ul class="friend_links">
       <% @member.friends.each do |friend| %>
         <li> <%= link_to friend.name, member_path(friend)%> 
         </li>
@@ -43,4 +62,43 @@
   </dd>
 </dl>
 
+
+<script>
+
+	var XHR = {};
+	XHR.base = function(callback) {
+		var request = new XMLHttpRequest(), callback = callback || function () {};
+		request.onreadystatechange = function() {
+			if (this.readyState == 4 ) {
+				callback(request.response);
+			}
+		};
+		return request;
+	}
+	XHR.get = function (url, params, callback) { 
+		var request = XHR.base(callback);
+		request.open("GET",[url, '?', params].join(''), /*async flag -> */ true); 
+		request.send();
+	}
+
+	function get_page_id() {
+		let tokens = location.pathname.split(/\//) 
+		return tokens[tokens.length - 1]
+	}
+
+  document.getElementById('query').addEventListener('change', function() {
+    XHR.get(`/members/${ get_page_id() }/search/${this.value}`, '', (raw_json) => {
+      markup = JSON.parse(raw_json).map((result) => {
+        breadcrumb =  result.liason_chain.map((member) => {
+          return member.name
+        }).join(' -> ')
+        matching_tags_found = result.heading_matches.join('</li><li>')
+        ul = `<ul>${ '<li>' + matching_tags_found + '</li>'}</ul>`;
+        return breadcrumb + ul
+      }).join('<br />');
+      document.getElementById('results').innerHTML = markup;
+    })
+  });
+
+</script>
 

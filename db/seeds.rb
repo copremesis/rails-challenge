@@ -18,7 +18,7 @@ urls = %w(https://en.wikipedia.org/wiki/Mark_Twain
           https://en.wikipedia.org/wiki/Steve_Vai)
 
 urls.each do |url|
-  name = url.split(%r{/})[-1].humanize
+  name = url.split(%r{/})[-1].split(/_/).join(' ')
   member = Member.create(name: name, original_url: url)
 end
 
@@ -29,6 +29,6 @@ end
 50.times do
   member_id = get_random_member_id
   friend_id = get_random_member_id
-  #ensure one is not friends with themselves
+  # ensure one is not friends with themselves
   Member.find(member_id).connections.create!(member_id: friend_id) if member_id != friend_id
 end

@@ -5,4 +5,5 @@ Rails.application.routes.draw do
 
   root to: 'members#index'
   resources :members, only: %i[index show create]
+  get '/members/:id/search/:query', to: 'members#search'
 end
