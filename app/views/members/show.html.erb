@@ -36,7 +36,7 @@
   <dd>
     <ul>
       <% @member.friends.each do |friend| %>
-        <li> <%= link_to friend.short_url, friend.short_url%> 
+        <li> <%= link_to friend.name, member_path(friend)%> 
         </li>
       <% end %>
     </ul>
