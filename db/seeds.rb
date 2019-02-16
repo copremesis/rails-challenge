@@ -29,5 +29,6 @@ end
 50.times do
   member_id = get_random_member_id
   friend_id = get_random_member_id
-  Member.find(member_id).connections.create!(member_id: friend_id)
+  #ensure one is not friends with themselves
+  Member.find(member_id).connections.create!(member_id: friend_id) if member_id != friend_id
 end
