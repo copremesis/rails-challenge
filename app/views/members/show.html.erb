@@ -2,20 +2,9 @@
 <%= link_to 'Back', root_path %>
 
 <style>
-	body {
-		margin-left: 5%;
-	}
-	ul.tags, ul.friend_links {
-			-moz-column-count: 3;
-			-moz-column-gap: 20px;
-			-webkit-column-count: 3;
-			-webkit-column-gap: 20px;
-			column-count: 3;
-			column-gap: 20px;
-	}
 </style>
 
-<div id="search" style="float: right; width:50%; height: 50%; margin-top: 7%">
+<div id="search">
 	<input id="query" placeholder="search" value="" />
 	<div id="results"> </div>
 </div>
@@ -50,7 +39,7 @@
     </ul>
   </dd>
   <dt>
- Friend's Urls:
+ Friend's:
   </dt>
   <dd>
     <ul class="friend_links">
@@ -86,11 +75,15 @@
 		return tokens[tokens.length - 1]
 	}
 
+	function link(member) {
+	   return `<a href="/members/${member.id}">${member.name}</a>`;	
+  }
+
   document.getElementById('query').addEventListener('change', function() {
     XHR.get(`/members/${ get_page_id() }/search/${this.value}`, '', (raw_json) => {
       markup = JSON.parse(raw_json).map((result) => {
         breadcrumb =  result.liason_chain.map((member) => {
-          return member.name
+          return link(member);
         }).join(' -> ')
         matching_tags_found = result.heading_matches.join('</li><li>')
         ul = `<ul>${ '<li>' + matching_tags_found + '</li>'}</ul>`;
