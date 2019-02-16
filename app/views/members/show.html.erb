@@ -84,7 +84,7 @@
       markup = JSON.parse(raw_json).map((result) => {
         breadcrumb =  result.liason_chain.map((member) => {
           return link(member);
-        }).join(' -> ')
+        }).join(' &rarr; ')
         matching_tags_found = result.heading_matches.join('</li><li>')
         ul = `<ul>${ '<li>' + matching_tags_found + '</li>'}</ul>`;
         return breadcrumb + ul
