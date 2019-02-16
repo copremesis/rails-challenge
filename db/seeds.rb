@@ -26,7 +26,7 @@ def get_random_member_id
   [*1..Member.count].sample
 end
 
-50.times do
+25.times do
   member_id = get_random_member_id
   friend_id = get_random_member_id
   # ensure one is not friends with themselves
