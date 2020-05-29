@@ -1,4 +1,4 @@
-# EverlyWell Ruby Challenge
+# Ruby on Rails Challenge
 
 ### Overview
 
